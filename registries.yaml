@@ -1,0 +1,4 @@
+mirrors:
+"localhost:6050":
+  endpoint:
+    - http://k3d-new-app-registry:6050
