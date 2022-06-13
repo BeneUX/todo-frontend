@@ -1,0 +1,25 @@
+#apiVersion: argoproj.io/v3.3.6
+apiVersion: argoproj.io/v1alpha
+kind: Application
+metadata:
+  name: todo-frontend
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoUrl: https://github.com/BeneUX/todo-frontend.git
+    targetRevision: HEAD
+    path: src
+
+  destination:
+    server: https://kubernetes.default.service.svc
+    namespace: todo-frontend-argocd
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
