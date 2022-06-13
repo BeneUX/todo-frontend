@@ -5,7 +5,7 @@ metadata:
   labels:
     app: todo-frontend
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: todo-frontend
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: todo-frontend
-          image: beneux/todo-frontend:main
+          image: ghcr.io/beneux/todo-frontend:main
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

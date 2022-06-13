@@ -1,5 +1,4 @@
-#apiVersion: argoproj.io/v3.3.6
-apiVersion: argoproj.io/v1alpha
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: todo-frontend
@@ -8,12 +7,12 @@ spec:
   project: default
 
   source:
-    repoUrl: https://github.com/BeneUX/todo-frontend.git
+    repoURL: https://github.com/BeneUX/todo-frontend.git
     targetRevision: HEAD
-    path: src
+    path: ./helm/templates
 
   destination:
-    server: https://kubernetes.default.service.svc
+    server: https://kubernetes.default.svc
     namespace: todo-frontend-argocd
 
   syncPolicy:
