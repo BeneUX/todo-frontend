@@ -17,8 +17,6 @@ spec:
       containers:
         - name: todo-frontend
           image: ghcr.io/beneux/todo-frontend:main
-      imagePullSecrets:
-        - name: myregistrykey
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -7,4 +7,6 @@ metadata:
   resourceVersion: "405"
   uid: 4ee6db6a-d39a-49d9-9d2f-bbefbaff7769
 secrets:
-- name: default-token-rcn7r
+  - name: default-token-rcn7r
+imagePullSecrets:
+  - name: myregistrykey2
