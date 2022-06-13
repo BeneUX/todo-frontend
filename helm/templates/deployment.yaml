@@ -17,6 +17,8 @@ spec:
       containers:
         - name: todo-frontend
           image: ghcr.io/beneux/todo-frontend:main
+      imagePullSecrets:
+        - name: ${{ secrets.GHCR_PAT }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
