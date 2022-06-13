@@ -14,6 +14,8 @@ spec:
       labels:
         app: todo-frontend
     spec:
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
       containers:
         - name: todo-frontend
           image: ghcr.io/beneux/todo-frontend:main
