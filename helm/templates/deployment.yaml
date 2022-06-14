@@ -5,7 +5,7 @@ metadata:
   labels:
     app: todo-frontend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: todo-frontend
@@ -14,12 +14,12 @@ spec:
       labels:
         app: todo-frontend
     spec:
-      imagePullSecrets:
-        - name: dockerconfigjson-github-com
       containers:
         - name: todo-frontend
           image: ghcr.io/beneux/todo-frontend:main
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
+ #         ports:
+ #           - containerPort: 8080
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
       restartPolicy: Always
