@@ -5,7 +5,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 jobs:
   build-angular-app:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - run: ls -la
       - uses: actions/checkout@v3
@@ -24,6 +24,12 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
