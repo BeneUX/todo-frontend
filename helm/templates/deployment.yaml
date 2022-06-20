@@ -1,25 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-frontend
+  name: {{ include "mychart.fullname" . }}
   labels:
-    app: todo-frontend
+    {{- include "mychart.labels" . | nindent 4 }}
 spec:
-  replicas: 2
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      app: todo-frontend
+      {{- include "mychart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        app: todo-frontend
+        {{- include "mychart.selectorLabels" . | nindent 8 }}
     spec:
-      containers:
-        - name: todo-frontend
-          image: ghcr.io/beneux/todo-frontend@sha256:1e80ec5696cf41fa574d8093be828f91506b04fc33b7a66694ff92962c2d134a
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
-      restartPolicy: Always
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        - name: dockerconfigjson-github-com
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "mychart.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+#          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
