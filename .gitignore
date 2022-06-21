@@ -43,3 +43,4 @@ Thumbs.db
 
 /helm/templates/secrets.yaml
 /helm2/templates/secrets.yaml
+/helmOLD
