@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/beneux/todo-frontend@sha256:126e8acb5d47a20f04e93310e13c83752aec1f3c7a391874573e679abb704091                                      
+  repository: ghcr.io/beneux/todo-frontend@sha256:8a233d8db5c0f390a452215a209ba6319cedbf1cd2717283568b1e68cbeb9943                                      
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
